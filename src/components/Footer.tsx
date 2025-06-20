@@ -1,4 +1,3 @@
-
 import { Music, Instagram, Twitter, Youtube, Facebook } from 'lucide-react';
 
 const Footer = () => {
@@ -42,7 +41,7 @@ const Footer = () => {
     <footer className="bg-gradient-to-br from-gray-900 to-black border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-8 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-8 mb-8">
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
@@ -67,62 +66,61 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Links Sections */}
-          <div className="sm:gid-cols-2">
+          {/* Links Sections - 2 columns on small screens, 4 columns on large */}
+          <div className="lg:col-span-4 grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-white font-semibold mb-4">Discover</h3>
+              <ul className="space-y-2">
+                {footerLinks.discover.map((link) => (
+                  <li key={link.name}>
+                    <a href={link.href} className="text-gray-400 hover:text-purple-300 transition-colors duration-200">
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div>
-            <h3 className="text-white font-semibold mb-4">Discover</h3>
-            <ul className="space-y-2">
-              {footerLinks.discover.map((link) => (
-                <li key={link.name}>
-                  <a href={link.href} className="text-gray-400 hover:text-purple-300 transition-colors duration-200">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div>
+              <h3 className="text-white font-semibold mb-4">Events</h3>
+              <ul className="space-y-2">
+                {footerLinks.events.map((link) => (
+                  <li key={link.name}>
+                    <a href={link.href} className="text-gray-400 hover:text-purple-300 transition-colors duration-200">
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div>
-            <h3 className="text-white font-semibold mb-4">Events</h3>
-            <ul className="space-y-2">
-              {footerLinks.events.map((link) => (
-                <li key={link.name}>
-                  <a href={link.href} className="text-gray-400 hover:text-purple-300 transition-colors duration-200">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div>
+              <h3 className="text-white font-semibold mb-4">Community</h3>
+              <ul className="space-y-2">
+                {footerLinks.community.map((link) => (
+                  <li key={link.name}>
+                    <a href={link.href} className="text-gray-400 hover:text-purple-300 transition-colors duration-200">
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div>
-            <h3 className="text-white font-semibold mb-4">Community</h3>
-            <ul className="space-y-2">
-              {footerLinks.community.map((link) => (
-                <li key={link.name}>
-                  <a href={link.href} className="text-gray-400 hover:text-purple-300 transition-colors duration-200">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-white font-semibold mb-4">Support</h3>
-            <ul className="space-y-2">
-              {footerLinks.support.map((link) => (
-                <li key={link.name}>
-                  <a href={link.href} className="text-gray-400 hover:text-purple-300 transition-colors duration-200">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div>
+              <h3 className="text-white font-semibold mb-4">Support</h3>
+              <ul className="space-y-2">
+                {footerLinks.support.map((link) => (
+                  <li key={link.name}>
+                    <a href={link.href} className="text-gray-400 hover:text-purple-300 transition-colors duration-200">
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
 
         {/* Bottom Section */}
         <div className="border-t border-gray-800 pt-8">
