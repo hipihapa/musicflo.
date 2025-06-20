@@ -68,6 +68,8 @@ const Footer = () => {
           </div>
 
           {/* Links Sections */}
+          <div className="sm:gid-cols-2">
+
           <div>
             <h3 className="text-white font-semibold mb-4">Discover</h3>
             <ul className="space-y-2">
@@ -120,6 +122,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
+      </div>
 
         {/* Bottom Section */}
         <div className="border-t border-gray-800 pt-8">
