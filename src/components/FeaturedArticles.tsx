@@ -24,17 +24,6 @@ const FeaturedArticles = () => {
     },
     {
       id: 2,
-      title: "Fraternity Festival: Togetherness and sound 2025",
-      description: "A deep dive into the latest synthwave masterpiece that's captivating listeners globally.",
-      author: "Alfred Boakye",
-      readTime: "6 min read",
-      category: "Review",
-      image: img2,
-      featured: false,
-      views: "8.2K"
-    },
-    {
-      id: 3,
       title: "AfroGosple Jams: Fire Festival is back again in 2025",
       description: "Come with your dancing boots and enjoy moments from this music festival. SIGN UP NOW!",
       author: "Emma Thompson",
@@ -43,7 +32,18 @@ const FeaturedArticles = () => {
       image: img3,
       featured: false,
       views: "15.7K"
-    }
+    },
+     {
+      id: 3,
+      title: "Fraternity Festival: Togetherness and sound 2025",
+      description: "A deep dive into the latest synthwave masterpiece that's captivating listeners globally.",
+      author: "Alfred Boakye",
+      readTime: "5 months read",
+      category: "Review",
+      image: img2,
+      featured: false,
+      views: "8.2K"
+    },
   ];
 
   return (
