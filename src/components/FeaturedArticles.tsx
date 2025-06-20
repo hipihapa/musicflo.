@@ -35,7 +35,7 @@ const FeaturedArticles = () => {
     },
     {
       id: 3,
-      title: "Fire Festival: Ultra Music Festival 2024",
+      title: "AfroGosple Jams: Fire Festival is back again in 2025",
       description: "Come with your dancing boots and enjoy moments from this music festival. SIGN UP NOW!",
       author: "Emma Thompson",
       readTime: "10 min read",
