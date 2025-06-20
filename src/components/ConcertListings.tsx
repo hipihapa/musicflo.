@@ -25,7 +25,8 @@ const ConcertListings = () => {
       genre: "Gospel",
       status: "Free",
       ticketsLeft: "Limited",
-      interested: "2.3K"
+      interested: "2.3K",
+      ticketUrl: "#"
     },
     {
       id: 2,
@@ -39,7 +40,9 @@ const ConcertListings = () => {
       genre: "Afro Gospel",
       status: "Free",
       ticketsLeft: "Few Seats Left",
-      interested: "1.8K"
+      interested: "1.8K",
+      ticketUrl: "#"
+
     },
     {
       id: 3,
@@ -53,7 +56,8 @@ const ConcertListings = () => {
       genre: "Gospel",
       status: "Free",
       ticketsLeft: "Free Entry",
-      interested: "3.1K"
+      interested: "3.1K",
+      ticketUrl: "#"
     },
     {
       id: 4,
@@ -67,7 +71,8 @@ const ConcertListings = () => {
       genre: "Worship Medley",
       status: "Free",
       ticketsLeft: "Free",
-      interested: "4.2K"
+      interested: "4.2K",
+      ticketUrl: "#"
     },
     {
       id: 5,
@@ -81,7 +86,8 @@ const ConcertListings = () => {
       genre: "Gospel",
       status: "Coming Soon",
       ticketsLeft: "Soon",
-      interested: "1.5K"
+      interested: "1.5K",
+      ticketUrl: "https://joyfulwayinc.com/"
     },
     {
       id: 6,
@@ -95,7 +101,8 @@ const ConcertListings = () => {
       genre: "Jams",
       status: "Free",
       ticketsLeft: "Few Seats Left",
-      interested: "987"
+      interested: "987",
+      ticketUrl: "#"
     }
   ];
 
@@ -172,13 +179,25 @@ const ConcertListings = () => {
                 
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-white">{concert.price}</div>
-<Button
-                    className="bg-gradient-to-r from-accent-teal to-accent-green hover:from-accent-teal/80 hover:to-accent-green/80 text-white"
-                    disabled={concert.status === "Free"}
-                  >
-                    <Ticket className="mr-2 h-4 w-4" />
-                    {concert.status === "Free" ? "Free" : "Get Tickets"}
-                  </Button>
+                  {concert.status === "Free" ? (
+                    <Button
+                      className="bg-gradient-to-r from-accent-teal to-accent-green hover:from-accent-teal/80 hover:to-accent-green/80 text-white"
+                      disabled
+                    >
+                      <Ticket className="mr-2 h-4 w-4" />
+                      Free
+                    </Button>
+                  ) : (
+                    <a
+                      href={concert.ticketUrl}
+                      className="text-sm bg-gradient-to-r from-accent-teal to-accent-green hover:from-accent-teal/80 hover:to-accent-green/80 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-teal"
+                    >
+                      <div className="flex">
+                      <Ticket className="mr-2 h-4 w-4" />
+                      Get Ticket
+                      </div>
+                    </a>
+                  )}
                 </div>
               </CardContent>
             </Card>

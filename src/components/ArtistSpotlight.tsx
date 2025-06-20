@@ -29,7 +29,7 @@ const ArtistSpotlight = () => {
       followers: "39.5K",
       monthlyListeners: "20K",
       description: "Raw energy meets melodic sophistication in this emerging song.",
-      spotifyUrl: "https://open.spotify.com/track/657RzcMKRzcSholpANcYGH?si=053773bc45ff4257",
+      spotifyUrl: "https://youtu.be/A07XByuk6WA?si=lKdGYL5IN3_JnPwu",
       instagramUrl: "https://www.instagram.com/enuonyam_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
       profileViews: "32K"
     },

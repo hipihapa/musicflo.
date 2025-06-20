@@ -14,7 +14,7 @@ const Newsletter = () => {
     e.preventDefault();
     if (email) {
       toast({
-        title: "Welcome to MusicFlow!",
+        title: "Welcome to MusicFlo!",
         description: "You've successfully subscribed to our newsletter.",
       });
       setEmail('');
