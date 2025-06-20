@@ -24,7 +24,7 @@ const ConcertListings = () => {
       image: img1,
       genre: "Gospel",
       status: "Free",
-      ticketsLeft: "Limited",
+      ticketsLeft: "Limited Seats",
       interested: "2.3K",
       ticketUrl: "#"
     },
@@ -70,7 +70,7 @@ const ConcertListings = () => {
       image: img4,
       genre: "Worship Medley",
       status: "Free",
-      ticketsLeft: "Free",
+      ticketsLeft: "Free Entry",
       interested: "4.2K",
       ticketUrl: "#"
     },
@@ -85,7 +85,7 @@ const ConcertListings = () => {
       image: img5,
       genre: "Gospel",
       status: "Coming Soon",
-      ticketsLeft: "Soon",
+      ticketsLeft: "Coming Soon",
       interested: "1.5K",
       ticketUrl: "https://joyfulwayinc.com/"
     },
