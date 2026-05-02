@@ -71,6 +71,7 @@ type ConcertRow = {
   venue: string;
   city: string;
   date: string;
+  time: string;
   status: PublishStatus;
   admission: Admission;
   ticketUrl: string;
@@ -83,6 +84,7 @@ const INITIAL_CONCERTS: ConcertRow[] = [
     venue: "Elwak Stadium",
     city: "Accra",
     date: "2025-06-29",
+    time: "17:00",
     status: "Published",
     admission: "free",
     ticketUrl: "",
@@ -93,6 +95,7 @@ const INITIAL_CONCERTS: ConcertRow[] = [
     venue: "CCB Auditorium KNUST",
     city: "Kumasi",
     date: "2025-06-21",
+    time: "17:00",
     status: "Published",
     admission: "free",
     ticketUrl: "",
@@ -103,6 +106,7 @@ const INITIAL_CONCERTS: ConcertRow[] = [
     venue: "Black and Phamous Lounge",
     city: "Accra",
     date: "2025-06-21",
+    time: "18:00",
     status: "Draft",
     admission: "paid",
     ticketUrl: "https://example.com/tickets/upper-room",
@@ -129,10 +133,14 @@ const emptyNewConcert = (): NewConcertForm => ({
   ticketUrl: "",
 });
 
+type ConcertEditForm = NewConcertForm & { status: PublishStatus };
+
 const AdminConcerts = () => {
   const [concerts, setConcerts] = useState<ConcertRow[]>(INITIAL_CONCERTS);
   const [addOpen, setAddOpen] = useState(false);
   const [newConcert, setNewConcert] = useState<NewConcertForm>(emptyNewConcert);
+  const [editId, setEditId] = useState<string | null>(null);
+  const [editDraft, setEditDraft] = useState<ConcertEditForm | null>(null);
   const [unpublishTarget, setUnpublishTarget] = useState<ConcertRow | null>(null);
 
   useEffect(() => {
@@ -149,12 +157,64 @@ const AdminConcerts = () => {
         venue: newConcert.venue.trim() || "TBA",
         city: newConcert.city.trim() || "TBA",
         date: newConcert.date || new Date().toISOString().slice(0, 10),
+        time: newConcert.time,
         status: "Draft",
         admission: newConcert.admission,
         ticketUrl: newConcert.ticketUrl.trim(),
       },
     ]);
     setAddOpen(false);
+  };
+
+  const openEdit = (row: ConcertRow) => {
+    setEditId(row.id);
+    setEditDraft({
+      artist: row.artist,
+      venue: row.venue,
+      city: row.city,
+      date: row.date,
+      time: row.time,
+      admission: row.admission,
+      ticketUrl: row.ticketUrl,
+      status: row.status,
+    });
+  };
+
+  const closeEdit = () => {
+    setEditId(null);
+    setEditDraft(null);
+  };
+
+  const saveEdit = () => {
+    if (!editId || !editDraft) return;
+    setConcerts((prev) =>
+      prev.map((c) =>
+        c.id === editId
+          ? {
+              ...c,
+              artist: editDraft.artist.trim() || c.artist,
+              venue: editDraft.venue.trim() || c.venue,
+              city: editDraft.city.trim() || c.city,
+              date: editDraft.date || c.date,
+              time: editDraft.time,
+              admission: editDraft.admission,
+              ticketUrl: editDraft.ticketUrl.trim(),
+              status: editDraft.status,
+            }
+          : c
+      )
+    );
+    closeEdit();
+  };
+
+  const confirmUnpublish = () => {
+    if (!unpublishTarget) return;
+    setConcerts((prev) =>
+      prev.map((c) =>
+        c.id === unpublishTarget.id ? { ...c, status: "Draft" as const } : c
+      )
+    );
+    setUnpublishTarget(null);
   };
 
   return (
@@ -372,7 +432,10 @@ const AdminConcerts = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className={adminDropdown}>
-                        <DropdownMenuItem className={adminDropdownItem}>
+                        <DropdownMenuItem
+                          className={adminDropdownItem}
+                          onSelect={() => openEdit(row)}
+                        >
                           <Pencil className="mr-2 h-4 w-4" />
                           Edit
                         </DropdownMenuItem>
@@ -393,6 +456,166 @@ const AdminConcerts = () => {
           </Table>
         </div>
       </main>
+
+      <Dialog
+        open={editId !== null && editDraft !== null}
+        onOpenChange={(open) => {
+          if (!open) closeEdit();
+        }}
+      >
+        {editDraft ? (
+          <DialogContent className={cn("sm:max-w-lg", adminDialog)}>
+            <DialogHeader>
+              <DialogTitle className={adminDialogTitle}>Edit concert</DialogTitle>
+              <DialogDescription className={adminDialogDesc}>
+                Update listing details and publish status.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-2">
+              <div className="grid gap-2">
+                <Label htmlFor="edit-c-artist" className={adminLabel}>
+                  Artist / title
+                </Label>
+                <Input
+                  id="edit-c-artist"
+                  className={adminInput}
+                  value={editDraft.artist}
+                  onChange={(e) => setEditDraft((d) => (d ? { ...d, artist: e.target.value } : d))}
+                />
+              </div>
+              <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-c-venue" className={adminLabel}>
+                    Venue
+                  </Label>
+                  <Input
+                    id="edit-c-venue"
+                    className={adminInput}
+                    value={editDraft.venue}
+                    onChange={(e) => setEditDraft((d) => (d ? { ...d, venue: e.target.value } : d))}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-c-city" className={adminLabel}>
+                    City
+                  </Label>
+                  <Input
+                    id="edit-c-city"
+                    className={adminInput}
+                    value={editDraft.city}
+                    onChange={(e) => setEditDraft((d) => (d ? { ...d, city: e.target.value } : d))}
+                  />
+                </div>
+              </div>
+              <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-c-date" className={adminLabel}>
+                    Date
+                  </Label>
+                  <Input
+                    id="edit-c-date"
+                    type="date"
+                    className={adminInput}
+                    value={editDraft.date}
+                    onChange={(e) => setEditDraft((d) => (d ? { ...d, date: e.target.value } : d))}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-c-time" className={adminLabel}>
+                    Time
+                  </Label>
+                  <Input
+                    id="edit-c-time"
+                    type="time"
+                    className={adminInput}
+                    value={editDraft.time}
+                    onChange={(e) => setEditDraft((d) => (d ? { ...d, time: e.target.value } : d))}
+                  />
+                </div>
+              </div>
+              <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
+                <div className="grid gap-2">
+                  <Label className={adminLabel}>Admission</Label>
+                  <Select
+                    value={editDraft.admission}
+                    onValueChange={(v) =>
+                      setEditDraft((d) => (d ? { ...d, admission: v as Admission } : d))
+                    }
+                  >
+                    <SelectTrigger className={cn(adminInput, "h-10")}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className={adminDropdown}>
+                      <SelectItem value="free" className={adminDropdownItem}>
+                        Free
+                      </SelectItem>
+                      <SelectItem value="paid" className={adminDropdownItem}>
+                        Paid
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid gap-2">
+                  <Label className={adminLabel}>Status</Label>
+                  <Select
+                    value={editDraft.status}
+                    onValueChange={(v) =>
+                      setEditDraft((d) =>
+                        d ? { ...d, status: v as PublishStatus } : d
+                      )
+                    }
+                  >
+                    <SelectTrigger className={cn(adminInput, "h-10")}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className={adminDropdown}>
+                      <SelectItem value="Published" className={adminDropdownItem}>
+                        Published
+                      </SelectItem>
+                      <SelectItem value="Draft" className={adminDropdownItem}>
+                        Draft
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-c-ticket-url" className={adminLabel}>
+                  Ticketing URL
+                </Label>
+                <Input
+                  id="edit-c-ticket-url"
+                  type="url"
+                  inputMode="url"
+                  className={adminInput}
+                  value={editDraft.ticketUrl}
+                  onChange={(e) =>
+                    setEditDraft((d) => (d ? { ...d, ticketUrl: e.target.value } : d))
+                  }
+                />
+                <p className={cn("text-xs", adminMuted)}>Ticket purchase or RSVP link.</p>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                type="button"
+                className={cn("rounded-full border-gray-600", adminOutlineBtn)}
+                onClick={closeEdit}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                className={cn("rounded-full", adminPrimaryBtn)}
+                onClick={saveEdit}
+              >
+                Save changes
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        ) : null}
+      </Dialog>
 
       <AlertDialog
         open={unpublishTarget !== null}
@@ -422,7 +645,7 @@ const AdminConcerts = () => {
             </AlertDialogCancel>
             <AlertDialogAction
               className="rounded-full border-0 bg-red-600 font-semibold text-white hover:bg-red-600/90 focus:ring-red-600"
-              onClick={() => setUnpublishTarget(null)}
+              onClick={confirmUnpublish}
             >
               Unpublish
             </AlertDialogAction>
