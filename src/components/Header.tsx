@@ -15,10 +15,11 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  /** Same order as the homepage: Hero → Featured articles → Artists → Concerts → Newsletter */
   const menuItems = [
     { name: 'Home', href: '#home' },
+    { name: 'Articles', href: '#articles' },
     { name: 'Artists', href: '#artists' },
-    // { name: 'Releases', href: '#releases' },
     { name: 'Concerts', href: '#concerts' },
     { name: 'About', href: '#newsletter' },
   ];

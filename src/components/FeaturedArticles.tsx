@@ -47,7 +47,7 @@ const FeaturedArticles = () => {
   ];
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="articles" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="fade-in text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
           Featured <span className="bg-gradient-to-r from-accent-teal to-accent-green bg-clip-text text-transparent">Stories</span>
