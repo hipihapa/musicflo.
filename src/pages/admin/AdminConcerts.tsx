@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, Pencil, MoreHorizontal } from "lucide-react";
 import AdminTopBar from "@/components/admin/AdminTopBar";
 import { cn } from "@/lib/utils";
@@ -39,6 +39,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -55,7 +62,21 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-const rows = [
+type PublishStatus = "Published" | "Draft";
+type Admission = "free" | "paid";
+
+type ConcertRow = {
+  id: string;
+  artist: string;
+  venue: string;
+  city: string;
+  date: string;
+  status: PublishStatus;
+  admission: Admission;
+  ticketUrl: string;
+};
+
+const INITIAL_CONCERTS: ConcertRow[] = [
   {
     id: "1",
     artist: "Praise Reloaded",
@@ -63,6 +84,8 @@ const rows = [
     city: "Accra",
     date: "2025-06-29",
     status: "Published",
+    admission: "free",
+    ticketUrl: "",
   },
   {
     id: "2",
@@ -71,6 +94,8 @@ const rows = [
     city: "Kumasi",
     date: "2025-06-21",
     status: "Published",
+    admission: "free",
+    ticketUrl: "",
   },
   {
     id: "3",
@@ -79,14 +104,58 @@ const rows = [
     city: "Accra",
     date: "2025-06-21",
     status: "Draft",
+    admission: "paid",
+    ticketUrl: "https://example.com/tickets/upper-room",
   },
 ];
 
-type ConcertRow = (typeof rows)[number];
+type NewConcertForm = {
+  artist: string;
+  venue: string;
+  city: string;
+  date: string;
+  time: string;
+  admission: Admission;
+  ticketUrl: string;
+};
+
+const emptyNewConcert = (): NewConcertForm => ({
+  artist: "",
+  venue: "",
+  city: "",
+  date: "",
+  time: "",
+  admission: "free",
+  ticketUrl: "",
+});
 
 const AdminConcerts = () => {
+  const [concerts, setConcerts] = useState<ConcertRow[]>(INITIAL_CONCERTS);
   const [addOpen, setAddOpen] = useState(false);
+  const [newConcert, setNewConcert] = useState<NewConcertForm>(emptyNewConcert);
   const [unpublishTarget, setUnpublishTarget] = useState<ConcertRow | null>(null);
+
+  useEffect(() => {
+    if (addOpen) setNewConcert(emptyNewConcert());
+  }, [addOpen]);
+
+  const saveNewConcert = () => {
+    const id = String(Date.now());
+    setConcerts((prev) => [
+      ...prev,
+      {
+        id,
+        artist: newConcert.artist.trim() || "Untitled event",
+        venue: newConcert.venue.trim() || "TBA",
+        city: newConcert.city.trim() || "TBA",
+        date: newConcert.date || new Date().toISOString().slice(0, 10),
+        status: "Draft",
+        admission: newConcert.admission,
+        ticketUrl: newConcert.ticketUrl.trim(),
+      },
+    ]);
+    setAddOpen(false);
+  };
 
   return (
     <>
@@ -96,7 +165,7 @@ const AdminConcerts = () => {
       />
       <main className="flex-1 space-y-6 p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className={cn("text-sm", adminMuted)}>{rows.length} listings · UI preview only</p>
+          <p className={cn("text-sm", adminMuted)}>{concerts.length} listings · UI preview only</p>
           <Dialog open={addOpen} onOpenChange={setAddOpen}>
             <DialogTrigger asChild>
               <Button className={cn("gap-2 rounded-full", adminPrimaryBtn)}>
@@ -116,20 +185,38 @@ const AdminConcerts = () => {
                   <Label htmlFor="c-artist" className={adminLabel}>
                     Artist / title
                   </Label>
-                  <Input id="c-artist" placeholder="e.g. City Worship Night" className={adminInput} />
+                  <Input
+                    id="c-artist"
+                    placeholder="e.g. City Worship Night"
+                    className={adminInput}
+                    value={newConcert.artist}
+                    onChange={(e) => setNewConcert((f) => ({ ...f, artist: e.target.value }))}
+                  />
                 </div>
                 <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="c-venue" className={adminLabel}>
                       Venue
                     </Label>
-                    <Input id="c-venue" placeholder="Stadium name" className={adminInput} />
+                    <Input
+                      id="c-venue"
+                      placeholder="Stadium name"
+                      className={adminInput}
+                      value={newConcert.venue}
+                      onChange={(e) => setNewConcert((f) => ({ ...f, venue: e.target.value }))}
+                    />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="c-city" className={adminLabel}>
                       City
                     </Label>
-                    <Input id="c-city" placeholder="Accra" className={adminInput} />
+                    <Input
+                      id="c-city"
+                      placeholder="Accra"
+                      className={adminInput}
+                      value={newConcert.city}
+                      onChange={(e) => setNewConcert((f) => ({ ...f, city: e.target.value }))}
+                    />
                   </div>
                 </div>
                 <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
@@ -137,13 +224,65 @@ const AdminConcerts = () => {
                     <Label htmlFor="c-date" className={adminLabel}>
                       Date
                     </Label>
-                    <Input id="c-date" type="date" className={adminInput} />
+                    <Input
+                      id="c-date"
+                      type="date"
+                      className={adminInput}
+                      value={newConcert.date}
+                      onChange={(e) => setNewConcert((f) => ({ ...f, date: e.target.value }))}
+                    />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="c-time" className={adminLabel}>
                       Time
                     </Label>
-                    <Input id="c-time" type="time" className={adminInput} />
+                    <Input
+                      id="c-time"
+                      type="time"
+                      className={adminInput}
+                      value={newConcert.time}
+                      onChange={(e) => setNewConcert((f) => ({ ...f, time: e.target.value }))}
+                    />
+                  </div>
+                </div>
+                <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
+                  <div className="grid gap-2">
+                    <Label className={adminLabel}>Admission</Label>
+                    <Select
+                      value={newConcert.admission}
+                      onValueChange={(v) =>
+                        setNewConcert((f) => ({ ...f, admission: v as Admission }))
+                      }
+                    >
+                      <SelectTrigger className={cn(adminInput, "h-10")}>
+                        <SelectValue placeholder="Free or paid" />
+                      </SelectTrigger>
+                      <SelectContent className={adminDropdown}>
+                        <SelectItem value="free" className={adminDropdownItem}>
+                          Free
+                        </SelectItem>
+                        <SelectItem value="paid" className={adminDropdownItem}>
+                          Paid
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid gap-2 sm:col-span-2">
+                    <Label htmlFor="c-ticket-url" className={adminLabel}>
+                      Ticketing URL
+                    </Label>
+                    <Input
+                      id="c-ticket-url"
+                      type="url"
+                      inputMode="url"
+                      placeholder="https://tickets.example.com/…"
+                      className={adminInput}
+                      value={newConcert.ticketUrl}
+                      onChange={(e) => setNewConcert((f) => ({ ...f, ticketUrl: e.target.value }))}
+                    />
+                    <p className={cn("text-xs", adminMuted)}>
+                      Link to buy or register. Optional for free events if you only use on-site entry.
+                    </p>
                   </div>
                 </div>
                 <div className="grid gap-2">
@@ -170,7 +309,7 @@ const AdminConcerts = () => {
                 <Button
                   type="button"
                   className={cn("rounded-full", adminPrimaryBtn)}
-                  onClick={() => setAddOpen(false)}
+                  onClick={saveNewConcert}
                 >
                   Save
                 </Button>
@@ -186,17 +325,30 @@ const AdminConcerts = () => {
                 <TableHead className={adminTableHead}>Venue</TableHead>
                 <TableHead className={adminTableHead}>City</TableHead>
                 <TableHead className={adminTableHead}>Date</TableHead>
+                <TableHead className={adminTableHead}>Admission</TableHead>
                 <TableHead className={adminTableHead}>Status</TableHead>
                 <TableHead className={cn("w-[70px] text-right", adminTableHead)}>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {rows.map((row) => (
+              {concerts.map((row) => (
                 <TableRow key={row.id} className={adminTableRow}>
                   <TableCell className="font-medium text-white">{row.artist}</TableCell>
                   <TableCell className={adminMuted}>{row.venue}</TableCell>
                   <TableCell className="text-gray-200">{row.city}</TableCell>
                   <TableCell className="text-gray-200">{row.date}</TableCell>
+                  <TableCell>
+                    <Badge
+                      className={cn(
+                        "h-8 min-h-8 px-3 py-0 text-xs font-medium capitalize leading-none",
+                        row.admission === "paid"
+                          ? "border border-warm-yellow/50 bg-warm-yellow/10 text-warm-yellow"
+                          : "border border-accent-teal/40 bg-accent-teal/10 text-accent-teal"
+                      )}
+                    >
+                      {row.admission}
+                    </Badge>
+                  </TableCell>
                   <TableCell>
                     <Badge
                       className={cn(

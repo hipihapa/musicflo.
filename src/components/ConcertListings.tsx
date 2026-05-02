@@ -24,7 +24,6 @@ const ConcertListings = () => {
       image: img1,
       genre: "Gospel",
       status: "Free",
-      ticketsLeft: "Limited Seats",
       interested: "2.3K",
       ticketUrl: "#"
     },
@@ -39,7 +38,6 @@ const ConcertListings = () => {
       image: img2,
       genre: "Afro Gospel",
       status: "Free",
-      ticketsLeft: "Few Seats Left",
       interested: "1.8K",
       ticketUrl: "#"
 
@@ -55,7 +53,6 @@ const ConcertListings = () => {
       image: img3,
       genre: "Gospel",
       status: "Free",
-      ticketsLeft: "Free Entry",
       interested: "3.1K",
       ticketUrl: "#"
     },
@@ -70,7 +67,6 @@ const ConcertListings = () => {
       image: img4,
       genre: "Worship Medley",
       status: "Free",
-      ticketsLeft: "Free Entry",
       interested: "4.2K",
       ticketUrl: "#"
     },
@@ -85,7 +81,6 @@ const ConcertListings = () => {
       image: img5,
       genre: "Gospel",
       status: "Coming Soon",
-      ticketsLeft: "Coming Soon",
       interested: "1.5K",
       ticketUrl: "https://joyfulwayinc.com/"
     },
@@ -100,21 +95,10 @@ const ConcertListings = () => {
       image: img6,
       genre: "Jams",
       status: "Free",
-      ticketsLeft: "Few Seats Left",
       interested: "987",
       ticketUrl: "#"
     }
   ];
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Selling Fast': return 'bg-red-600';
-      case 'Limited': return 'bg-orange-600';
-      case 'On Sale': return 'bg-green-600';
-      case 'Pre-Sale': return 'bg-blue-600';
-      default: return 'bg-gray-600';
-    }
-  };
 
   return (
     <section id="concerts" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -138,11 +122,6 @@ const ConcertListings = () => {
                   className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                <div className="absolute top-3 left-3">
-                  <Badge className={`${getStatusColor(concert.status)} text-white`}>
-                    {concert.ticketsLeft}
-                  </Badge>
-                </div>
                 <div className="absolute top-3 right-3">
                   <Badge variant="outline" className="bg-dark-bg/50 backdrop-blur-sm border-gray-600 text-gray-300">
                     {concert.genre}
