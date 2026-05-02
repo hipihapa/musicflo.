@@ -1,4 +1,6 @@
 import { Bell, Search } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { adminInput, adminMuted, adminTopBar } from "@/lib/admin-ui";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -9,27 +11,27 @@ type AdminTopBarProps = {
 
 const AdminTopBar = ({ title, description }: AdminTopBarProps) => {
   return (
-    <header className="flex h-16 shrink-0 items-center justify-between gap-4 border-b border-border bg-card/50 px-6 backdrop-blur-sm">
+    <header className={cn("flex h-16 shrink-0 items-center justify-between gap-4 px-6", adminTopBar)}>
       <div className="min-w-0">
-        <h1 className="truncate text-lg font-semibold text-foreground">{title}</h1>
+        <h1 className="truncate text-lg font-semibold text-white">{title}</h1>
         {description ? (
-          <p className="truncate text-sm text-muted-foreground">{description}</p>
+          <p className={cn("truncate text-sm", adminMuted)}>{description}</p>
         ) : null}
       </div>
       <div className="flex items-center gap-2">
         <div className="relative hidden max-w-xs sm:block">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className={cn("absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2", adminMuted)} />
           <Input
             placeholder="Search…"
-            className="h-9 w-56 pl-9 bg-background"
+            className={cn("h-9 w-56 pl-9", adminInput)}
             readOnly
           />
         </div>
-        <Button variant="ghost" size="icon" className="text-muted-foreground" type="button">
+        <Button variant="ghost" size="icon" className={cn(adminMuted, "hover:bg-white/10 hover:text-white")} type="button">
           <Bell className="h-5 w-5" />
         </Button>
         <div
-          className="hidden h-9 w-9 shrink-0 rounded-full border border-border bg-muted sm:block"
+          className="hidden h-9 w-9 shrink-0 rounded-full border border-gray-700 bg-dark-card sm:block"
           aria-hidden
         />
       </div>

@@ -1,6 +1,22 @@
 import { useState } from "react";
 import { Plus, MoreHorizontal, Pencil } from "lucide-react";
 import AdminTopBar from "@/components/admin/AdminTopBar";
+import { cn } from "@/lib/utils";
+import {
+  adminDialog,
+  adminDialogDesc,
+  adminDialogTitle,
+  adminDropdown,
+  adminDropdownItem,
+  adminInput,
+  adminLabel,
+  adminMuted,
+  adminOutlineBtn,
+  adminPrimaryBtn,
+  adminTableHead,
+  adminTableRow,
+  adminTableWrap,
+} from "@/lib/admin-ui";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -62,70 +78,101 @@ const AdminArticles = () => {
       <AdminTopBar title="Articles" description="Featured stories and editorial content." />
       <main className="flex-1 space-y-6 p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm text-muted-foreground">Homepage “Featured articles” section</p>
+          <p className={cn("text-sm", adminMuted)}>Homepage “Featured articles” section</p>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button className="gap-2">
+              <Button className={cn("gap-2 rounded-full", adminPrimaryBtn)}>
                 <Plus className="h-4 w-4" />
                 New article
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-lg">
+            <DialogContent className={cn("sm:max-w-lg", adminDialog)}>
               <DialogHeader>
-                <DialogTitle>Create article</DialogTitle>
-                <DialogDescription>Rich text editor can replace this textarea later.</DialogDescription>
+                <DialogTitle className={adminDialogTitle}>Create article</DialogTitle>
+                <DialogDescription className={adminDialogDesc}>
+                  Rich text editor can replace this textarea later.
+                </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-2">
                 <div className="grid gap-2">
-                  <Label htmlFor="a-title">Title</Label>
-                  <Input id="a-title" placeholder="Headline" />
+                  <Label htmlFor="a-title" className={adminLabel}>
+                    Title
+                  </Label>
+                  <Input id="a-title" placeholder="Headline" className={adminInput} />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="a-excerpt">Excerpt</Label>
-                  <Textarea id="a-excerpt" placeholder="Short blurb for cards…" rows={3} />
+                  <Label htmlFor="a-excerpt" className={adminLabel}>
+                    Excerpt
+                  </Label>
+                  <Textarea
+                    id="a-excerpt"
+                    placeholder="Short blurb for cards…"
+                    rows={3}
+                    className={adminInput}
+                  />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="a-cover">Cover image</Label>
-                  <Input id="a-cover" type="file" accept="image/*" className="cursor-pointer" />
+                  <Label htmlFor="a-cover" className={adminLabel}>
+                    Cover image
+                  </Label>
+                  <Input
+                    id="a-cover"
+                    type="file"
+                    accept="image/*"
+                    className={cn("cursor-pointer", adminInput)}
+                  />
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" type="button" onClick={() => setOpen(false)}>
+                <Button
+                  variant="outline"
+                  type="button"
+                  className={cn("rounded-full border-gray-600", adminOutlineBtn)}
+                  onClick={() => setOpen(false)}
+                >
                   Cancel
                 </Button>
-                <Button type="button" onClick={() => setOpen(false)}>
+                <Button
+                  type="button"
+                  className={cn("rounded-full", adminPrimaryBtn)}
+                  onClick={() => setOpen(false)}
+                >
                   Save draft
                 </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
         </div>
-        <div className="rounded-lg border border-border bg-card">
+        <div className={adminTableWrap}>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Author</TableHead>
-                <TableHead>Updated</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="w-[70px] text-right">Actions</TableHead>
+              <TableRow className={adminTableRow}>
+                <TableHead className={adminTableHead}>Title</TableHead>
+                <TableHead className={adminTableHead}>Author</TableHead>
+                <TableHead className={adminTableHead}>Updated</TableHead>
+                <TableHead className={adminTableHead}>Status</TableHead>
+                <TableHead className={cn("w-[70px] text-right", adminTableHead)}>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {rows.map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell className="max-w-[240px] font-medium truncate">{row.title}</TableCell>
-                  <TableCell className="text-muted-foreground">{row.author}</TableCell>
-                  <TableCell>{row.updated}</TableCell>
+                <TableRow key={row.id} className={adminTableRow}>
+                  <TableCell className="max-w-[240px] truncate font-medium text-white">
+                    {row.title}
+                  </TableCell>
+                  <TableCell className={adminMuted}>{row.author}</TableCell>
+                  <TableCell className="text-gray-200">{row.updated}</TableCell>
                   <TableCell>
                     <Badge
-                      variant={
-                        row.status === "Published"
-                          ? "default"
-                          : row.status === "Scheduled"
-                            ? "outline"
-                            : "secondary"
-                      }
+                      className={cn(
+                        "font-medium",
+                        row.status === "Published" &&
+                          "border-0 bg-gradient-to-r from-accent-teal to-accent-green text-white",
+                        row.status === "Scheduled" &&
+                          "border border-accent-teal/50 bg-transparent text-accent-teal",
+                        row.status === "Draft" &&
+                          "border border-gray-600 bg-dark-bg/80 text-gray-300"
+                      )}
                     >
                       {row.status}
                     </Badge>
@@ -133,16 +180,21 @@ const AdminArticles = () => {
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" type="button">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          type="button"
+                          className="text-gray-400 hover:bg-white/10 hover:text-white"
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
+                      <DropdownMenuContent align="end" className={adminDropdown}>
+                        <DropdownMenuItem className={adminDropdownItem}>
                           <Pencil className="mr-2 h-4 w-4" />
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem>Preview</DropdownMenuItem>
+                        <DropdownMenuItem className={adminDropdownItem}>Preview</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

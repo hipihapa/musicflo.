@@ -1,12 +1,13 @@
 import { Outlet } from "react-router-dom";
 import AdminSidebar from "@/components/admin/AdminSidebar";
+import { adminMainColumn, adminShell } from "@/lib/admin-ui";
 
 const AdminLayout = () => {
   return (
-    <div className="dark min-h-screen bg-background text-foreground font-poppins">
+    <div className={adminShell}>
       <div className="flex min-h-screen">
         <AdminSidebar />
-        <div className="flex min-w-0 flex-1 flex-col">
+        <div className={adminMainColumn}>
           <Outlet />
         </div>
       </div>

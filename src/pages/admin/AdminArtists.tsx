@@ -1,6 +1,18 @@
 import { useState } from "react";
 import { Plus, Star } from "lucide-react";
 import AdminTopBar from "@/components/admin/AdminTopBar";
+import { cn } from "@/lib/utils";
+import {
+  adminCard,
+  adminDialog,
+  adminDialogDesc,
+  adminDialogTitle,
+  adminInput,
+  adminLabel,
+  adminMuted,
+  adminOutlineBtn,
+  adminPrimaryBtn,
+} from "@/lib/admin-ui";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -53,51 +65,73 @@ const AdminArtists = () => {
       />
       <main className="flex-1 space-y-6 p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm text-muted-foreground">
-            Toggle who appears in the spotlight strip (UI only).
-          </p>
+          <p className={cn("text-sm", adminMuted)}>Toggle who appears in the spotlight strip (UI only).</p>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button className="gap-2">
+              <Button className={cn("gap-2 rounded-full", adminPrimaryBtn)}>
                 <Plus className="h-4 w-4" />
                 Add artist
               </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className={adminDialog}>
               <DialogHeader>
-                <DialogTitle>Add artist profile</DialogTitle>
-                <DialogDescription>Public bio and imagery for the marketing site.</DialogDescription>
+                <DialogTitle className={adminDialogTitle}>Add artist profile</DialogTitle>
+                <DialogDescription className={adminDialogDesc}>
+                  Public bio and imagery for the marketing site.
+                </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-2">
                 <div className="grid gap-2">
-                  <Label htmlFor="ar-name">Name</Label>
-                  <Input id="ar-name" placeholder="Stage name" />
+                  <Label htmlFor="ar-name" className={adminLabel}>
+                    Name
+                  </Label>
+                  <Input id="ar-name" placeholder="Stage name" className={adminInput} />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="ar-genre">Genre</Label>
-                  <Input id="ar-genre" placeholder="Afrobeat" />
+                  <Label htmlFor="ar-genre" className={adminLabel}>
+                    Genre
+                  </Label>
+                  <Input id="ar-genre" placeholder="Afrobeat" className={adminInput} />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="ar-bio">Bio</Label>
-                  <Textarea id="ar-bio" placeholder="Short paragraph…" rows={4} />
+                  <Label htmlFor="ar-bio" className={adminLabel}>
+                    Bio
+                  </Label>
+                  <Textarea id="ar-bio" placeholder="Short paragraph…" rows={4} className={adminInput} />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="ar-photo">Photo</Label>
-                  <Input id="ar-photo" type="file" accept="image/*" className="cursor-pointer" />
+                  <Label htmlFor="ar-photo" className={adminLabel}>
+                    Photo
+                  </Label>
+                  <Input
+                    id="ar-photo"
+                    type="file"
+                    accept="image/*"
+                    className={cn("cursor-pointer", adminInput)}
+                  />
                 </div>
-                <div className="flex items-center justify-between rounded-lg border border-border p-3">
+                <div className="flex items-center justify-between rounded-lg border border-gray-800/50 bg-dark-bg/50 p-3">
                   <div>
-                    <p className="text-sm font-medium">Featured on home</p>
-                    <p className="text-xs text-muted-foreground">Show in spotlight section</p>
+                    <p className="text-sm font-medium text-white">Featured on home</p>
+                    <p className={cn("text-xs", adminMuted)}>Show in spotlight section</p>
                   </div>
                   <Switch defaultChecked aria-label="Featured on home" />
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" type="button" onClick={() => setOpen(false)}>
+                <Button
+                  variant="outline"
+                  type="button"
+                  className={cn("rounded-full border-gray-600", adminOutlineBtn)}
+                  onClick={() => setOpen(false)}
+                >
                   Cancel
                 </Button>
-                <Button type="button" onClick={() => setOpen(false)}>
+                <Button
+                  type="button"
+                  className={cn("rounded-full", adminPrimaryBtn)}
+                  onClick={() => setOpen(false)}
+                >
                   Save
                 </Button>
               </DialogFooter>
@@ -106,28 +140,46 @@ const AdminArtists = () => {
         </div>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {artists.map((a) => (
-            <Card key={a.id} className="border-border bg-card">
+            <Card key={a.id} className={adminCard}>
               <CardHeader className="flex flex-row items-start justify-between space-y-0">
                 <div>
-                  <CardTitle className="text-base">{a.name}</CardTitle>
-                  <CardDescription>{a.genre}</CardDescription>
+                  <CardTitle className="text-base text-white">{a.name}</CardTitle>
+                  <CardDescription className={adminMuted}>{a.genre}</CardDescription>
                 </div>
                 {a.featured ? (
-                  <Badge className="gap-1 shrink-0">
+                  <Badge
+                    className={cn(
+                      "shrink-0 gap-1 border-0 bg-gradient-to-r from-accent-teal to-accent-green font-medium text-white"
+                    )}
+                  >
                     <Star className="h-3 w-3" />
                     Featured
                   </Badge>
                 ) : (
-                  <Badge variant="outline">Hidden</Badge>
+                  <Badge
+                    variant="outline"
+                    className="shrink-0 border-gray-600 bg-transparent font-medium text-gray-400"
+                  >
+                    Hidden
+                  </Badge>
                 )}
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-sm text-muted-foreground">{a.blurb}</p>
-                <div className="flex gap-2">
-                  <Button variant="secondary" size="sm" type="button">
+                <p className={cn("text-sm", adminMuted)}>{a.blurb}</p>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    size="sm"
+                    type="button"
+                    className="border border-gray-600 bg-dark-bg/80 text-gray-200 hover:bg-white/10"
+                  >
                     Edit
                   </Button>
-                  <Button variant="outline" size="sm" type="button">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    type="button"
+                    className="rounded-full border-accent-teal/40 font-medium text-accent-teal hover:bg-accent-teal/10"
+                  >
                     {a.featured ? "Remove spotlight" : "Set spotlight"}
                   </Button>
                 </div>

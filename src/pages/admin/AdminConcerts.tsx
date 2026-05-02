@@ -1,6 +1,22 @@
 import { useState } from "react";
 import { Plus, Pencil, MoreHorizontal } from "lucide-react";
 import AdminTopBar from "@/components/admin/AdminTopBar";
+import { cn } from "@/lib/utils";
+import {
+  adminDialog,
+  adminDialogDesc,
+  adminDialogTitle,
+  adminDropdown,
+  adminDropdownItem,
+  adminInput,
+  adminLabel,
+  adminMuted,
+  adminOutlineBtn,
+  adminPrimaryBtn,
+  adminTableHead,
+  adminTableRow,
+  adminTableWrap,
+} from "@/lib/admin-ui";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -67,101 +83,136 @@ const AdminConcerts = () => {
       />
       <main className="flex-1 space-y-6 p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm text-muted-foreground">
-            {rows.length} listings · UI preview only
-          </p>
+          <p className={cn("text-sm", adminMuted)}>{rows.length} listings · UI preview only</p>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button className="gap-2">
+              <Button className={cn("gap-2 rounded-full", adminPrimaryBtn)}>
                 <Plus className="h-4 w-4" />
                 Add concert
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-lg">
+            <DialogContent className={cn("sm:max-w-lg", adminDialog)}>
               <DialogHeader>
-                <DialogTitle>New concert</DialogTitle>
-                <DialogDescription>
+                <DialogTitle className={adminDialogTitle}>New concert</DialogTitle>
+                <DialogDescription className={adminDialogDesc}>
                   Form layout for Supabase — fields are not saved yet.
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-2">
                 <div className="grid gap-2">
-                  <Label htmlFor="c-artist">Artist / title</Label>
-                  <Input id="c-artist" placeholder="e.g. City Worship Night" />
+                  <Label htmlFor="c-artist" className={adminLabel}>
+                    Artist / title
+                  </Label>
+                  <Input id="c-artist" placeholder="e.g. City Worship Night" className={adminInput} />
                 </div>
                 <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="c-venue">Venue</Label>
-                    <Input id="c-venue" placeholder="Stadium name" />
+                    <Label htmlFor="c-venue" className={adminLabel}>
+                      Venue
+                    </Label>
+                    <Input id="c-venue" placeholder="Stadium name" className={adminInput} />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="c-city">City</Label>
-                    <Input id="c-city" placeholder="Accra" />
+                    <Label htmlFor="c-city" className={adminLabel}>
+                      City
+                    </Label>
+                    <Input id="c-city" placeholder="Accra" className={adminInput} />
                   </div>
                 </div>
                 <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="c-date">Date</Label>
-                    <Input id="c-date" type="date" />
+                    <Label htmlFor="c-date" className={adminLabel}>
+                      Date
+                    </Label>
+                    <Input id="c-date" type="date" className={adminInput} />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="c-time">Time</Label>
-                    <Input id="c-time" type="time" />
+                    <Label htmlFor="c-time" className={adminLabel}>
+                      Time
+                    </Label>
+                    <Input id="c-time" type="time" className={adminInput} />
                   </div>
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="c-poster">Poster image</Label>
-                  <Input id="c-poster" type="file" accept="image/*" className="cursor-pointer" />
+                  <Label htmlFor="c-poster" className={adminLabel}>
+                    Poster image
+                  </Label>
+                  <Input
+                    id="c-poster"
+                    type="file"
+                    accept="image/*"
+                    className={cn("cursor-pointer", adminInput)}
+                  />
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" type="button" onClick={() => setOpen(false)}>
+                <Button
+                  variant="outline"
+                  type="button"
+                  className={cn("rounded-full border-gray-600", adminOutlineBtn)}
+                  onClick={() => setOpen(false)}
+                >
                   Cancel
                 </Button>
-                <Button type="button" onClick={() => setOpen(false)}>
+                <Button
+                  type="button"
+                  className={cn("rounded-full", adminPrimaryBtn)}
+                  onClick={() => setOpen(false)}
+                >
                   Save (preview)
                 </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
         </div>
-        <div className="rounded-lg border border-border bg-card">
+        <div className={adminTableWrap}>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Event</TableHead>
-                <TableHead>Venue</TableHead>
-                <TableHead>City</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="w-[70px] text-right">Actions</TableHead>
+              <TableRow className={adminTableRow}>
+                <TableHead className={adminTableHead}>Event</TableHead>
+                <TableHead className={adminTableHead}>Venue</TableHead>
+                <TableHead className={adminTableHead}>City</TableHead>
+                <TableHead className={adminTableHead}>Date</TableHead>
+                <TableHead className={adminTableHead}>Status</TableHead>
+                <TableHead className={cn("w-[70px] text-right", adminTableHead)}>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {rows.map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell className="font-medium">{row.artist}</TableCell>
-                  <TableCell className="text-muted-foreground">{row.venue}</TableCell>
-                  <TableCell>{row.city}</TableCell>
-                  <TableCell>{row.date}</TableCell>
+                <TableRow key={row.id} className={adminTableRow}>
+                  <TableCell className="font-medium text-white">{row.artist}</TableCell>
+                  <TableCell className={adminMuted}>{row.venue}</TableCell>
+                  <TableCell className="text-gray-200">{row.city}</TableCell>
+                  <TableCell className="text-gray-200">{row.date}</TableCell>
                   <TableCell>
-                    <Badge variant={row.status === "Published" ? "default" : "secondary"}>
+                    <Badge
+                      className={
+                        row.status === "Published"
+                          ? "border-0 bg-gradient-to-r from-accent-teal to-accent-green font-medium text-white"
+                          : "border border-gray-600 bg-dark-bg/80 font-medium text-gray-300"
+                      }
+                    >
                       {row.status}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" type="button">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          type="button"
+                          className="text-gray-400 hover:bg-white/10 hover:text-white"
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
+                      <DropdownMenuContent align="end" className={adminDropdown}>
+                        <DropdownMenuItem className={adminDropdownItem}>
                           <Pencil className="mr-2 h-4 w-4" />
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive focus:text-destructive">
+                        <DropdownMenuItem className="text-red-400 focus:bg-red-500/10 focus:text-red-300">
                           Unpublish
                         </DropdownMenuItem>
                       </DropdownMenuContent>
