@@ -165,7 +165,7 @@ const AdminArticles = () => {
                   <TableCell>
                     <Badge
                       className={cn(
-                        "font-medium",
+                        "h-8 min-h-8 px-3 py-0 text-xs font-medium leading-none",
                         row.status === "Published" &&
                           "border-0 bg-gradient-to-r from-accent-teal to-accent-green text-white",
                         row.status === "Scheduled" &&

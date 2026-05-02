@@ -44,6 +44,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const rows = [
   {
@@ -72,8 +82,11 @@ const rows = [
   },
 ];
 
+type ConcertRow = (typeof rows)[number];
+
 const AdminConcerts = () => {
-  const [open, setOpen] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
+  const [unpublishTarget, setUnpublishTarget] = useState<ConcertRow | null>(null);
 
   return (
     <>
@@ -84,7 +97,7 @@ const AdminConcerts = () => {
       <main className="flex-1 space-y-6 p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className={cn("text-sm", adminMuted)}>{rows.length} listings · UI preview only</p>
-          <Dialog open={open} onOpenChange={setOpen}>
+          <Dialog open={addOpen} onOpenChange={setAddOpen}>
             <DialogTrigger asChild>
               <Button className={cn("gap-2 rounded-full", adminPrimaryBtn)}>
                 <Plus className="h-4 w-4" />
@@ -150,14 +163,14 @@ const AdminConcerts = () => {
                   variant="outline"
                   type="button"
                   className={cn("rounded-full border-gray-600", adminOutlineBtn)}
-                  onClick={() => setOpen(false)}
+                  onClick={() => setAddOpen(false)}
                 >
                   Cancel
                 </Button>
                 <Button
                   type="button"
                   className={cn("rounded-full", adminPrimaryBtn)}
-                  onClick={() => setOpen(false)}
+                  onClick={() => setAddOpen(false)}
                 >
                   Save
                 </Button>
@@ -213,9 +226,14 @@ const AdminConcerts = () => {
                           <Pencil className="mr-2 h-4 w-4" />
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-400 focus:bg-red-500/10 focus:text-red-300 data-[highlighted]:bg-red-500/10 data-[highlighted]:text-red-300">
-                          Unpublish
-                        </DropdownMenuItem>
+                        {row.status === "Published" ? (
+                          <DropdownMenuItem
+                            className="text-red-400 focus:bg-red-500/10 focus:text-red-300 data-[highlighted]:bg-red-500/10 data-[highlighted]:text-red-300"
+                            onSelect={() => setUnpublishTarget(row)}
+                          >
+                            Unpublish
+                          </DropdownMenuItem>
+                        ) : null}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
@@ -225,6 +243,42 @@ const AdminConcerts = () => {
           </Table>
         </div>
       </main>
+
+      <AlertDialog
+        open={unpublishTarget !== null}
+        onOpenChange={(next) => {
+          if (!next) setUnpublishTarget(null);
+        }}
+      >
+        <AlertDialogContent className={cn(adminDialog, "max-w-md")}>
+          <AlertDialogHeader>
+            <AlertDialogTitle className={adminDialogTitle}>Unpublish concert?</AlertDialogTitle>
+            <AlertDialogDescription className={adminDialogDesc}>
+              {unpublishTarget ? (
+                <>
+                  <span className="text-gray-300">
+                    {unpublishTarget.artist}
+                  </span>{" "}
+                  will be hidden from the public site. You can publish it again later.
+                </>
+              ) : null}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              className={cn("rounded-full border-gray-600 sm:mt-0", adminOutlineBtn)}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="rounded-full border-0 bg-red-600 font-semibold text-white hover:bg-red-600/90 focus:ring-red-600"
+              onClick={() => setUnpublishTarget(null)}
+            >
+              Unpublish
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
