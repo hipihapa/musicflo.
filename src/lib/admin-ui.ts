@@ -21,7 +21,7 @@ export const adminMuted = "text-gray-400";
 export const adminLabel = "text-gray-300";
 
 export const adminInput =
-  "border-gray-700 bg-dark-bg/90 text-white placeholder:text-gray-500 file:text-gray-300 focus-visible:border-accent-teal/50 focus-visible:ring-accent-teal/30";
+  "border-gray-800/25 bg-dark-bg/90 text-white placeholder:text-gray-500 file:text-gray-300 focus-visible:border-accent-teal/35 focus-visible:ring-1 focus-visible:ring-accent-teal/25 focus-visible:ring-offset-0";
 
 export const adminPrimaryBtn =
   "border-0 bg-gradient-to-r from-accent-teal to-accent-green font-semibold text-white shadow-none hover:from-accent-teal/85 hover:to-accent-green/85";

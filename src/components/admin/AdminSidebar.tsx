@@ -29,7 +29,7 @@ const AdminSidebar = () => {
           <p className={cn("text-xs", adminMuted)}>Admin</p>
         </div>
       </div>
-      <nav className="flex flex-1 flex-col gap-1 p-3">
+      <nav className="flex flex-1 flex-col gap-2 px-3 py-4">
         {nav.map(({ to, end, label, icon: Icon }) => (
           <NavLink
             key={to}
@@ -37,7 +37,7 @@ const AdminSidebar = () => {
             end={end}
             className={({ isActive }) =>
               cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                "flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors",
                 isActive ? adminNavActive : adminGhost
               )
             }
@@ -47,7 +47,7 @@ const AdminSidebar = () => {
           </NavLink>
         ))}
       </nav>
-      <div className="border-t border-gray-800/40 p-3 space-y-1">
+      <div className="space-y-2 border-t border-gray-800/40 p-3">
         <Button variant="ghost" className={cn("w-full justify-start gap-3", adminGhost)} asChild>
           <a href="/">
             <ExternalLink className="h-4 w-4" />

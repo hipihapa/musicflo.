@@ -159,7 +159,7 @@ const AdminConcerts = () => {
                   className={cn("rounded-full", adminPrimaryBtn)}
                   onClick={() => setOpen(false)}
                 >
-                  Save (preview)
+                  Save
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -186,11 +186,12 @@ const AdminConcerts = () => {
                   <TableCell className="text-gray-200">{row.date}</TableCell>
                   <TableCell>
                     <Badge
-                      className={
+                      className={cn(
+                        "h-8 min-h-8 px-3 py-0 text-xs font-medium leading-none",
                         row.status === "Published"
-                          ? "border-0 bg-gradient-to-r from-accent-teal to-accent-green font-medium text-white"
-                          : "border border-gray-600 bg-dark-bg/80 font-medium text-gray-300"
-                      }
+                          ? "border-0 bg-gradient-to-r from-accent-teal to-accent-green text-white"
+                          : "border border-gray-600 bg-dark-bg/80 text-gray-300"
+                      )}
                     >
                       {row.status}
                     </Badge>
