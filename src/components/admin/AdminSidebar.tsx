@@ -15,9 +15,9 @@ import { Button } from "@/components/ui/button";
 /** Same order as the public site after the hero: articles → artists → concerts; dashboard is the admin hub */
 const nav = [
   { to: "/admin", end: true, label: "Dashboard", icon: LayoutDashboard },
-  { to: "/admin/articles", label: "Articles", icon: Newspaper },
-  { to: "/admin/artists", label: "Artists", icon: Mic2 },
-  { to: "/admin/concerts", label: "Concerts", icon: CalendarDays },
+  { to: "/admin/articles", end: false, label: "Articles", icon: Newspaper },
+  { to: "/admin/artists", end: false, label: "Artists", icon: Mic2 },
+  { to: "/admin/concerts", end: false, label: "Concerts", icon: CalendarDays },
 ] as const;
 
 const AdminSidebar = () => {
