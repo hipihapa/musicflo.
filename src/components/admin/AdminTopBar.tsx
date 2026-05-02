@@ -1,8 +1,6 @@
-import { Bell, Search } from "lucide-react";
+import { User } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { adminInput, adminMuted, adminTopBar } from "@/lib/admin-ui";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { adminMuted, adminTopBar } from "@/lib/admin-ui";
 
 type AdminTopBarProps = {
   title: string;
@@ -18,22 +16,12 @@ const AdminTopBar = ({ title, description }: AdminTopBarProps) => {
           <p className={cn("truncate text-sm", adminMuted)}>{description}</p>
         ) : null}
       </div>
-      <div className="flex items-center gap-2">
-        <div className="relative hidden max-w-xs sm:block">
-          <Search className={cn("absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2", adminMuted)} />
-          <Input
-            placeholder="Search…"
-            className={cn("h-9 w-56 pl-9", adminInput)}
-            readOnly
-          />
-        </div>
-        <Button variant="ghost" size="icon" className={cn(adminMuted, "hover:bg-white/10 hover:text-white")} type="button">
-          <Bell className="h-5 w-5" />
-        </Button>
-        <div
-          className="hidden h-9 w-9 shrink-0 rounded-full border border-gray-700 bg-dark-card sm:block"
-          aria-hidden
-        />
+      <div
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gray-700 bg-dark-card text-gray-400"
+        role="img"
+        aria-label="Account"
+      >
+        <User className="h-4 w-4" aria-hidden />
       </div>
     </header>
   );

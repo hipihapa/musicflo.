@@ -64,19 +64,19 @@ const AdminDashboard = () => {
             <CardHeader>
               <CardTitle className="text-base text-white">Quick actions</CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-wrap gap-2">
-              <Badge className="border-gray-700 bg-dark-bg/80 font-medium text-gray-200 hover:bg-white/5">
+            <CardContent className="flex flex-wrap gap-3">
+              <Badge className="h-11 min-h-11 cursor-pointer border-gray-700 bg-dark-bg/80 px-5 py-0 text-sm font-medium leading-none text-gray-200 hover:bg-white/5">
                 Add concert
               </Badge>
-              <Badge className="border-gray-700 bg-dark-bg/80 font-medium text-gray-200 hover:bg-white/5">
+              <Badge className="h-11 min-h-11 cursor-pointer border-gray-700 bg-dark-bg/80 px-5 py-0 text-sm font-medium leading-none text-gray-200 hover:bg-white/5">
                 New article
               </Badge>
-              <Badge className="border-gray-700 bg-dark-bg/80 font-medium text-gray-200 hover:bg-white/5">
+              <Badge className="h-11 min-h-11 cursor-pointer border-gray-700 bg-dark-bg/80 px-5 py-0 text-sm font-medium leading-none text-gray-200 hover:bg-white/5">
                 Update hero copy
               </Badge>
               <Badge
                 variant="outline"
-                className="border-accent-teal/40 bg-transparent font-medium text-accent-teal hover:bg-accent-teal/10"
+                className="h-11 min-h-11 cursor-pointer border-accent-teal/40 bg-transparent px-5 py-0 text-sm font-medium leading-none text-accent-teal hover:bg-accent-teal/10"
               >
                 Newsletter draft
               </Badge>
