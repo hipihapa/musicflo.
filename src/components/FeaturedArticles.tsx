@@ -1,5 +1,5 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { Clock, User, Eye } from 'lucide-react';
 
@@ -57,15 +57,15 @@ const FeaturedArticles = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Featured Article */}
-        <div className="scale-in lg:row-span-2">
-          <Card className="bg-dark-card/80 backdrop-blur-sm border-gray-700 hover:border-accent-teal/50 transition-all duration-300 h-full group overflow-hidden">
-            <div className="relative overflow-hidden">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:grid-rows-2 lg:items-stretch">
+        {/* Featured Article — spans both rows so its height matches the two cards on the right */}
+        <div className="scale-in flex min-h-0 lg:row-span-2 lg:col-start-1 lg:row-start-1">
+          <Card className="group flex h-full w-full min-h-0 flex-col overflow-hidden border-gray-700 bg-dark-card/80 backdrop-blur-sm transition-all duration-300 hover:border-accent-teal/50">
+            <div className="relative shrink-0 overflow-hidden">
               <img 
                 src={articles[0].image} 
                 alt={articles[0].title}
-                className="w-full h-64 lg:h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-110 lg:h-72"
               />
               <div className="absolute top-4 left-4">
                 <Badge className="bg-gradient-to-r from-accent-teal to-accent-green text-white">
@@ -77,8 +77,8 @@ const FeaturedArticles = () => {
                 <span className="text-xs text-gray-300">{articles[0].views}</span>
               </div>
             </div>
-            <CardHeader>
-              <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
+            <CardHeader className="flex flex-1 flex-col">
+              <div className="mb-2 flex items-center gap-2 text-sm text-gray-400">
                 <Badge variant="outline" className="border-gray-600 text-gray-300">
                   {articles[0].category}
                 </Badge>
@@ -90,11 +90,11 @@ const FeaturedArticles = () => {
               <CardTitle className="text-2xl lg:text-3xl text-white leading-tight group-hover:text-accent-teal transition-colors">
                 {articles[0].title}
               </CardTitle>
-              <CardDescription className="text-gray-300 text-lg">
+              <CardDescription className="flex-1 text-lg text-gray-300">
                 {articles[0].description}
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="mt-auto shrink-0">
               <div className="flex items-center gap-2 text-gray-400">
                 <User className="h-4 w-4" />
                 <span>By {articles[0].author}</span>
@@ -103,17 +103,21 @@ const FeaturedArticles = () => {
           </Card>
         </div>
 
-        {/* Other Articles */}
-        <div className="space-y-8">
-          {articles.slice(1).map((article) => (
-            <div key={article.id} className="scale-in">
-              <Card className="bg-dark-card/80 backdrop-blur-sm border-gray-700 hover:border-accent-teal/50 transition-all duration-300 group overflow-hidden">
-                <div className="flex flex-col sm:flex-row">
-                  <div className="relative overflow-hidden sm:w-48 flex-shrink-0">
+        {/* Other Articles — one grid row each so combined height drives the featured column */}
+        {articles.slice(1).map((article, index) => (
+          <div
+            key={article.id}
+            className={cn(
+              "scale-in flex min-h-0 lg:col-start-2",
+              index === 0 ? "lg:row-start-1" : "lg:row-start-2"
+            )}
+          >
+            <Card className="group flex h-full min-h-0 w-full flex-col overflow-hidden border-gray-700 bg-dark-card/80 backdrop-blur-sm transition-all duration-300 hover:border-accent-teal/50 sm:flex-row">
+                <div className="relative h-48 shrink-0 overflow-hidden sm:h-full sm:w-48 sm:self-stretch">
                     <img 
                       src={article.image} 
                       alt={article.title}
-                      className="w-full h-48 sm:h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     <div className="absolute top-3 right-3 flex items-center gap-1 bg-dark-bg/60 backdrop-blur-sm px-2 py-1 rounded-full">
                       <Eye className="h-3 w-3 text-gray-300" />
@@ -145,12 +149,10 @@ const FeaturedArticles = () => {
                       </div>
                     </CardContent>
                   </div>
-                </div>
               </Card>
             </div>
           ))}
         </div>
-      </div>
     </section>
   );
 };
