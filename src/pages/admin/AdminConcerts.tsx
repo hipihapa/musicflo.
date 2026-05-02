@@ -213,7 +213,7 @@ const AdminConcerts = () => {
                           <Pencil className="mr-2 h-4 w-4" />
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-400 focus:bg-red-500/10 focus:text-red-300">
+                        <DropdownMenuItem className="text-red-400 focus:bg-red-500/10 focus:text-red-300 data-[highlighted]:bg-red-500/10 data-[highlighted]:text-red-300">
                           Unpublish
                         </DropdownMenuItem>
                       </DropdownMenuContent>

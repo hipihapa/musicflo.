@@ -49,8 +49,9 @@ export const adminDialogTitle = "text-white";
 
 export const adminDialogDesc = "text-gray-400";
 
+/** Elevated panel so menus read clearly above dark-card tables. */
 export const adminDropdown =
-  "border border-gray-800/50 bg-dark-card text-white";
+  "z-[300] border border-gray-500/35 bg-[#121212] text-white shadow-2xl shadow-black/60 ring-1 ring-white/10";
 
 export const adminDropdownItem =
-  "focus:bg-white/10 focus:text-white data-[highlighted]:bg-white/10";
+  "cursor-pointer text-gray-100 outline-none data-[highlighted]:bg-white/12 data-[highlighted]:text-white focus:bg-white/12 focus:text-white";
