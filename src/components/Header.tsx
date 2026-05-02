@@ -1,5 +1,5 @@
-
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X, Music } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -53,8 +53,11 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button className="bg-gradient-to-r from-accent-teal to-accent-green hover:from-accent-teal/80 hover:to-accent-green/80 text-white font-semibold px-6 py-2 rounded-full">
-              Submit Music
+            <Button
+              asChild
+              className="rounded-full bg-gradient-to-r from-accent-teal to-accent-green px-6 py-2 font-semibold text-white hover:from-accent-teal/80 hover:to-accent-green/80"
+            >
+              <Link to="/admin/login">Sign in</Link>
             </Button>
           </div>
 
@@ -80,8 +83,13 @@ const Header = () => {
                 {item.name}
               </a>
             ))}
-            <Button className="w-full mt-4 bg-gradient-to-r from-accent-teal to-accent-green hover:from-accent-teal/80 hover:to-accent-green/80 text-white font-semibold py-2 rounded-full">
-              Submit Music
+            <Button
+              asChild
+              className="mt-4 w-full rounded-full bg-gradient-to-r from-accent-teal to-accent-green py-2 font-semibold text-white hover:from-accent-teal/80 hover:to-accent-green/80"
+            >
+              <Link to="/admin/login" onClick={() => setIsMenuOpen(false)}>
+                Sign in
+              </Link>
             </Button>
           </div>
         )}
