@@ -31,13 +31,12 @@ const AdminLogin = () => {
     >
       <Link
         to="/"
+        aria-label="Back to site"
         className={cn(
-          "absolute left-4 top-4 flex items-center gap-2 text-sm transition-colors hover:text-accent-teal",
-          adminMuted
+          "absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-gray-800/50 bg-dark-card text-gray-300 shadow-md shadow-black/25 transition-colors hover:border-accent-teal/30 hover:bg-white/5 hover:text-accent-teal"
         )}
       >
-        <ArrowLeft className="h-4 w-4" />
-        Back to site
+        <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden />
       </Link>
       <Card className={cn("w-full max-w-md shadow-xl", adminCard)}>
         <CardHeader className="space-y-1 text-center">
@@ -63,20 +62,9 @@ const AdminLogin = () => {
             />
           </div>
           <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="admin-password" className={adminLabel}>
-                Password
-              </Label>
-              <button
-                type="button"
-                className={cn(
-                  "text-xs underline-offset-4 hover:text-accent-teal hover:underline",
-                  adminMuted
-                )}
-              >
-                Forgot password?
-              </button>
-            </div>
+            <Label htmlFor="admin-password" className={adminLabel}>
+              Password
+            </Label>
             <Input
               id="admin-password"
               type="password"
@@ -86,9 +74,9 @@ const AdminLogin = () => {
             />
           </div>
         </CardContent>
-        <CardFooter>
-          <Button className={cn("w-full rounded-full", adminPrimaryBtn)} type="button" asChild>
-            <Link to="/admin">Continue to dashboard</Link>
+        <CardFooter className="flex justify-center">
+          <Button className={cn("min-w-[10rem] rounded-full px-10", adminPrimaryBtn)} type="button" asChild>
+            <Link to="/admin">Continue</Link>
           </Button>
         </CardFooter>
       </Card>
