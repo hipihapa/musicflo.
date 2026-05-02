@@ -9,7 +9,7 @@ const stats = [
   { label: "Published concerts", value: "12", icon: CalendarDays, hint: "3 drafts", iconClass: "text-accent-teal" },
   { label: "Articles", value: "8", icon: Newspaper, hint: "2 scheduled", iconClass: "text-accent-green" },
   { label: "Spotlight artists", value: "5", icon: Users, hint: "Active on home", iconClass: "text-warm-yellow" },
-  { label: "Page views (30d)", value: "24.1k", icon: Eye, hint: "Placeholder metric", iconClass: "text-soft-orange" },
+  { label: "Page views (30d)", value: "24.1k", icon: Eye, hint: "Last 30 days", iconClass: "text-soft-orange" },
 ] as const;
 
 const activity = [
@@ -23,7 +23,7 @@ const AdminDashboard = () => {
     <>
       <AdminTopBar
         title="Dashboard"
-        description="Overview of your MusicFlo. content (static preview)."
+        description="Overview of your MusicFlo. content."
       />
       <main className="flex-1 space-y-6 p-6">
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

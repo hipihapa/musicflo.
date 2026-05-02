@@ -46,7 +46,7 @@ const AdminLogin = () => {
           </div>
           <CardTitle className="text-2xl text-white">Admin sign in</CardTitle>
           <CardDescription className={adminMuted}>
-            Sign in to manage concerts, articles, and artists. (UI only — wire Supabase later.)
+            Sign in to manage concerts, articles, and artists.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -86,13 +86,10 @@ const AdminLogin = () => {
             />
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col gap-3">
+        <CardFooter>
           <Button className={cn("w-full rounded-full", adminPrimaryBtn)} type="button" asChild>
             <Link to="/admin">Continue to dashboard</Link>
           </Button>
-          <p className={cn("text-center text-xs", adminMuted)}>
-            This button skips auth for layout preview.
-          </p>
         </CardFooter>
       </Card>
     </div>

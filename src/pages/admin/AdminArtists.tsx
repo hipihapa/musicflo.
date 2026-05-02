@@ -65,7 +65,7 @@ const AdminArtists = () => {
       />
       <main className="flex-1 space-y-6 p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className={cn("text-sm", adminMuted)}>Toggle who appears in the spotlight strip (UI only).</p>
+          <p className={cn("text-sm", adminMuted)}>Choose who appears in the homepage spotlight.</p>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button className={cn("gap-2 rounded-full", adminPrimaryBtn)}>

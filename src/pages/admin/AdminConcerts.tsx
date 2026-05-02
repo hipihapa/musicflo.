@@ -165,7 +165,7 @@ const AdminConcerts = () => {
       />
       <main className="flex-1 space-y-6 p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className={cn("text-sm", adminMuted)}>{concerts.length} listings · UI preview only</p>
+          <p className={cn("text-sm", adminMuted)}>{concerts.length} listings</p>
           <Dialog open={addOpen} onOpenChange={setAddOpen}>
             <DialogTrigger asChild>
               <Button className={cn("gap-2 rounded-full", adminPrimaryBtn)}>
@@ -177,7 +177,7 @@ const AdminConcerts = () => {
               <DialogHeader>
                 <DialogTitle className={adminDialogTitle}>New concert</DialogTitle>
                 <DialogDescription className={adminDialogDesc}>
-                  Form layout for Supabase — fields are not saved yet.
+                  Add a concert for the public site.
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-2">
@@ -280,9 +280,7 @@ const AdminConcerts = () => {
                       value={newConcert.ticketUrl}
                       onChange={(e) => setNewConcert((f) => ({ ...f, ticketUrl: e.target.value }))}
                     />
-                    <p className={cn("text-xs", adminMuted)}>
-                      Link to buy or register. Optional for free events if you only use on-site entry.
-                    </p>
+                    <p className={cn("text-xs", adminMuted)}>Ticket purchase or RSVP link.</p>
                   </div>
                 </div>
                 <div className="grid gap-2">

@@ -152,7 +152,7 @@ const AdminArticles = () => {
               <DialogHeader>
                 <DialogTitle className={adminDialogTitle}>Create article</DialogTitle>
                 <DialogDescription className={adminDialogDesc}>
-                  Rich text editor can replace this textarea later.
+                  Add a story for the Featured articles section.
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-2">
@@ -277,7 +277,7 @@ const AdminArticles = () => {
             <DialogHeader>
               <DialogTitle className={adminDialogTitle}>Edit article</DialogTitle>
               <DialogDescription className={adminDialogDesc}>
-                Update fields below. Changes apply to this table until you connect Supabase.
+                Update the article details.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-2">
