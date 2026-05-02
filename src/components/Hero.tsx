@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Play, TrendingUp, Users, Music } from 'lucide-react';
 
+const collaborateMailto = `mailto:hello@musicflo.com?subject=${encodeURIComponent("MusicFlo. — Let's collaborate on a project")}`;
+
 const Hero = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-dark-bg to-dark-card pt-20 md:pt-0">
@@ -22,14 +24,16 @@ const Hero = () => {
 
         <div className="fade-in flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
           <a href="#artists">
-            <Button className="bg-gradient-to-r from-accent-teal to-accent-green hover:from-accent-teal/80 hover:to-accent-green/80 text-white font-semibold px-8 py-3 rounded-full text-lg transition-all duration-300 transform hover:scale-105"
+            <Button className="min-h-12 bg-gradient-to-r from-accent-teal to-accent-green px-8 py-3 text-lg font-semibold text-white transition-all duration-300 hover:from-accent-teal/80 hover:to-accent-green/80 rounded-full transform hover:scale-105"
            >
             <Play className="mr-2 h-5 w-5" />
             Explore Music
           </Button>
           </a>
-          <Button variant="outline" className="border-accent-teal text-accent-teal hover:bg-accent-teal hover:text-white font-semibold px-8 py-3 rounded-full text-lg transition-all duration-300">
-            Submit Your Track
+          <Button variant="outline" className="min-h-12 border-accent-teal px-8 py-3 text-lg font-semibold text-accent-teal transition-all duration-300 hover:bg-accent-teal hover:text-white rounded-full" asChild>
+            <a href={collaborateMailto}>
+              {"Let's Collaborate"}
+            </a>
           </Button>
         </div>
 
